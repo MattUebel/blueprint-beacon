@@ -8,7 +8,7 @@ An interactive presentation exploring how AI is evolving beyond chatbots into ag
 
 ## 📋 What's Inside
 
-A 19-slide presentation organized in two parts:
+A 23-slide presentation organized in two parts:
 
 **Part 1: The Technology** - How AI is evolving from chatbots to agentic systems that understand human intent and translate it directly into code.
 
@@ -26,7 +26,7 @@ A 19-slide presentation organized in two parts:
 1. Clone this repository
 2. Open `index.html` in your browser
 3. Navigate with arrow keys or on-screen buttons
-4. Try the interactive demo on slide 11
+4. Try the interactive demo on slide 14
 
 ## 🎯 Key Concepts
 
