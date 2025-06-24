@@ -1,40 +1,49 @@
 # Blueprint Beacon: From Semantic AI to Secure Blueprints
 
-An interactive presentation exploring how Generative AI is evolving beyond chatbots into integrated reasoning engines, and how we can leverage this transformation to solve critical security challenges in software architecture.
+An interactive presentation exploring how Generative AI is evolving beyond chatbots into agentic reasoning engines, and how we can apply this transformation to proactively solve security challenges in software architecture design.
 
 ## 🎯 Overview
 
-This presentation examines the philosophical and practical shift from treating AI as a "syntactic engine" following rigid rules to embracing it as an "intentional system" capable of understanding human goals and context. It then applies this lens to a concrete problem: the exponential cost of discovering security flaws late in the development lifecycle.
+This presentation makes the case for moving beyond the "chatbot" perception of AI to understand its true potential as an integrated reasoning engine. It then demonstrates how this technology can be applied to solve a critical and expensive problem: identifying security flaws in architectural designs before they become costly production vulnerabilities.
 
 ## 🚀 Live Demo
 
 This presentation is designed to be hosted on GitHub Pages. You can view it live at:
-`https://[username].github.io/blueprint-beacon/`
+**https://mattuebel.github.io/blueprint-beacon/**
 
 ## 📋 Content Structure
 
-### Part I: The AI Revolution
-- **The Chatbot Perception**: How most people currently understand GenAI
-- **Beyond the Interface**: The real revolution of semantics-to-syntax translation
-- **Philosophical Framework**: The "Intentional Stance" and what it means for human-AI interaction
-- **Emerging Ecosystem**: The infrastructure being built for AI agents
+The presentation is organized into three main parts:
 
-### Part II: The Security Challenge
-- **The Cost Problem**: Why finding security flaws in production is exponentially more expensive than finding them in design
-- **The Solution Concept**: "Blueprint Beacon" - automated security review for architectural ideas
-- **Implementation Models**: From manual tools to fully automated guardians
+### Part I: The Technology Evolution
+- **The Problem**: The costly reality of late-stage security discoveries
+- **The AI We See**: Understanding the current "chatbot" perception of GenAI
+- **Beyond Chatbots**: How AI translates human language directly into machine syntax
+- **The Shift to Agentic AI**: From instructional to intentional systems
+- **Emerging Ecosystem**: Infrastructure supporting agent-based AI interactions
 
-### Part III: Making It Real
-- **Cultural Considerations**: Addressing the "Big Brother" problem in security automation
-- **Technical Implementation**: Active vs. passive analysis approaches
-- **Planning-as-Code**: Treating architectural decisions like source code
+### Part II: The Solution
+- **Automated Security Review**: A four-step system for analyzing design documents
+- **Live Demo**: Interactive demonstration of the proposed system
+- **Cultural Considerations**: Addressing adoption challenges and building trust
+- **Enterprise Controls**: Privacy, audit, RBAC, and model governance requirements
+
+### Part III: The Implementation
+- **Journey Mapping**: A three-phase approach from manual to fully automated
+- **Passive Analysis**: AI-powered comments in existing documentation
+- **Active Enforcement**: Quality gates in CI/CD pipelines
+- **Value Proposition**: Real benefits for security teams and developers
 
 ## 🎨 Features
 
-- **Interactive Navigation**: Keyboard and button-based slide navigation
-- **Animated Demonstrations**: Live mock demos of the proposed system
-- **Responsive Design**: Works on desktop and mobile devices
-- **Professional Styling**: Clean, modern presentation design using Tailwind CSS
+- **Interactive Navigation**: Keyboard and button-based slide navigation (18 total slides)
+- **Live Demonstrations**: 
+  - Animated chatbot conversation showing current AI perception
+  - Interactive mock demo of the automated security analysis system
+  - Realistic CI/CD pipeline integration examples
+- **Visual Examples**: Code samples showing AI-to-syntax translation in multiple languages
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Professional Styling**: Clean, modern presentation design with custom SVG graphics
 
 ## 🛠️ Technology Stack
 
@@ -47,10 +56,11 @@ This presentation is designed to be hosted on GitHub Pages. You can view it live
 
 This presentation serves as:
 
-- **A case study** in applying emerging AI capabilities to real-world problems
-- **An exploration** of the philosophical implications of treating AI as intentional agents
-- **A practical example** of how to think about security automation in the age of AI
-- **A demonstration** of "shift-left" security principles applied to architectural design
+- **A strategic framework** for understanding AI beyond the chatbot interface
+- **A practical case study** in applying agentic AI to solve real-world security challenges
+- **An implementation roadmap** for enterprise adoption of AI-powered security tools
+- **A demonstration** of "shift-left" security principles in modern development practices
+- **An exploration** of emerging technologies like the Model Context Protocol (MCP)
 
 ## 🔧 Local Development
 
@@ -58,33 +68,44 @@ To run locally:
 
 1. Clone this repository
 2. Open `index.html` in your web browser
-3. Use arrow keys or on-screen buttons to navigate
+3. Use arrow keys, space bar, or on-screen buttons to navigate
+4. Try the interactive demo on slide 10
 
-No build process required - it's a static HTML presentation.
+No build process required - it's a static HTML presentation optimized for modern browsers.
 
 ## 📖 Key Concepts Explored
 
-- **Intentional Stance**: Philosophical framework for understanding AI systems
-- **Semantic-to-Syntax Translation**: How AI bridges human intent and machine action
-- **Security Shift-Left**: Moving security considerations earlier in the development process
-- **Planning-as-Code**: Applying DevOps principles to architectural documentation
-- **Model Context Protocol**: Emerging standards for AI-to-application communication
+- **Agentic vs. Instructional AI**: Understanding the shift from rule-following to goal-oriented systems
+- **Semantic-to-Syntax Translation**: How AI bridges human intent and machine-executable code
+- **Security Shift-Left**: Moving security considerations to the earliest stages of design
+- **Model Context Protocol (MCP)**: Emerging standards for AI-to-application communication
+- **Enterprise AI Governance**: Privacy controls, audit trails, and model management
+- **Cultural Change Management**: Building trust in automated security systems
 
 ## 🎯 Target Audience
 
-- Software architects and engineers
-- Security professionals
-- DevOps practitioners
-- Anyone interested in the practical applications of AI in software development
-- Students of computer science and cybersecurity
+- **Software architects** looking to integrate AI into their design processes
+- **Security professionals** exploring proactive security automation
+- **Engineering leaders** planning AI adoption strategies
+- **DevOps practitioners** interested in next-generation CI/CD quality gates
+- **Students and researchers** studying the intersection of AI and cybersecurity
+- **Technology strategists** evaluating the business impact of agentic AI
 
 ## 📚 Sources and References
 
 The presentation includes citations to:
-- NIST research on software defect costs
-- Academic work on the Intentional Stance
-- Industry best practices for Architecture Decision Records (ADRs)
-- Emerging AI infrastructure protocols
+- **NIST research** on the exponential cost of software defects
+- **Anthropic's work** on agentic AI and the Model Context Protocol
+- **Industry best practices** for Architecture Decision Records (ADRs)
+- **Enterprise security frameworks** and compliance standards
+
+## 🚀 Implementation Inspiration
+
+While this is an educational presentation, the concepts demonstrated could be implemented using:
+- **Document Analysis**: Vector databases and semantic search
+- **Policy Engines**: Rule-based systems combined with LLM reasoning
+- **Integration Points**: GitHub Actions, GitLab CI, or Jenkins pipelines
+- **Enterprise Platforms**: Splunk, Elastic, or other data analytics platforms
 
 ## 🤝 Contributing
 
@@ -96,4 +117,4 @@ See the [LICENSE](LICENSE) file for details.
 
 ---
 
-*This presentation represents a thought experiment in applying cutting-edge AI capabilities to solve traditional software engineering challenges. It's designed to spark discussion about the future of AI-assisted development and security.*
+*This presentation represents a strategic exploration of how agentic AI can transform security practices in software development. It's designed to inspire discussion about the practical applications of next-generation AI technologies in enterprise environments.*
