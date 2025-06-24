@@ -9,34 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
+        /* --- Mobile-First Responsive Fix --- */
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Critical for preventing scroll on the body */
+        }
         body {
             font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Prevent scrollbars */
+            display: flex; /* Use flexbox for the main layout */
         }
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
+        #slide-container {
             width: 100%;
             height: 100%;
+            display: flex; /* This is the "filmstrip" */
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slide {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0; /* Prevents slides from shrinking */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem 4rem;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(100%);
-        }
-        .slide.active {
-            transform: translateX(0);
-        }
-        .slide.previous {
-            transform: translateX(-100%);
+            padding: 2rem; /* Adjusted padding for smaller screens */
         }
         .slide-content {
             max-width: 1000px;
             width: 100%;
         }
+        /* --- End Responsive Fix --- */
+
         .typing-indicator span {
             display: inline-block;
             width: 8px;
@@ -55,553 +58,453 @@
             0%, 100% { opacity: 0.3; transform: scale(0.8); }
             50% { opacity: 1; transform: scale(1); }
         }
+
+        /* Added for better readability on smaller screens */
+        @media (max-width: 768px) {
+            .slide h1 {
+                font-size: 2.25rem; /* 36px */
+                line-height: 2.5rem; /* 40px */
+            }
+            .slide h2 {
+                font-size: 1.25rem; /* 20px */
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-200">
 
-    <!-- Slide 1: Title Slide -->
-    <div id="slide-1" class="slide active">
-        <div class="slide-content text-center">
-            <div class="w-24 h-24 mx-auto mb-8">
-                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#083344;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#0e7490;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#shieldGradient)" />
-                    <g stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" class="opacity-70">
-                        <path d="M50 20 V 35" /> <path d="M50 65 V 80" />
-                        <path d="M30 30 L 45 35" /> <path d="M70 30 L 55 35" />
-                        <path d="M30 70 L 45 65" /> <path d="M70 70 L 55 65" />
-                        <path d="M45 35 H 55" /> <path d="M45 65 H 55" />
-                        <path d="M45 35 L 45 65" /> <path d="M55 35 L 55 65" />
-                    </g>
-                </svg>
-            </div>
-            
-            <h1 class="text-5xl md:text-6xl font-black text-white leading-tight">Shifting Security Left with Agentic AI</h1>
-            <h2 class="mt-4 text-2xl md:text-3xl font-light text-gray-300">Applying AI to Proactively Secure the Design Phase</h2>
-            <div class="mt-12 pt-8 border-t border-gray-700">
-                <p class="text-xl text-gray-400">Matt Uebel</p>
-                <p class="text-lg text-gray-500">Solutions Architect Candidate</p>
-            </div>
-        </div>
-    </div>
+    <!-- The "Filmstrip" Container -->
+    <div id="slide-container">
 
-    <!-- Slide 2: The Problem Upfront -->
-    <div id="slide-2" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white mb-6">The Problem: A Costly and Persistent Threat</h1>
-            <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">Insecure software provisioning is a silent killer of productivity and security. Misconfigurations introduced during the design phase lead to costly rework, project delays, and critical security incidents.</p>
-            <div class="grid md:grid-cols-3 gap-8 text-white">
-                <div class="bg-red-900/20 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-red-300">High Costs</h3>
-                    <p class="mt-2 text-red-200/90">Fixing flaws in production is exponentially more expensive than in design.</p>
+        <!-- Slide 1: Title Slide -->
+        <div id="slide-1" class="slide">
+            <div class="slide-content text-center">
+                <div class="w-24 h-24 mx-auto mb-8">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs><linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#083344;stop-opacity:1" /><stop offset="100%" style="stop-color:#0e7490;stop-opacity:1" /></linearGradient></defs>
+                        <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="url(#shieldGradient)" />
+                        <g stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" class="opacity-70">
+                            <path d="M50 20 V 35" /> <path d="M50 65 V 80" /><path d="M30 30 L 45 35" /> <path d="M70 30 L 55 35" /><path d="M30 70 L 45 65" /> <path d="M70 70 L 55 65" /><path d="M45 35 H 55" /> <path d="M45 65 H 55" /><path d="M45 35 L 45 65" /> <path d="M55 35 L 55 65" />
+                        </g>
+                    </svg>
                 </div>
-                <div class="bg-yellow-900/20 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-yellow-300">Project Delays</h3>
-                    <p class="mt-2 text-yellow-200/90">Last-minute security findings halt deployments and force emergency refactoring.</p>
-                </div>
-                <div class="bg-blue-900/20 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-blue-300">Major Incidents</h3>
-                    <p class="mt-2 text-blue-200/90">Simple misconfigurations are a leading cause of major data breaches.</p>
+                <h1 class="text-4xl md:text-6xl font-black text-white leading-tight">Shifting Security Left with Agentic AI</h1>
+                <h2 class="mt-4 text-xl md:text-3xl font-light text-gray-300">Applying AI to Proactively Secure the Design Phase</h2>
+                <div class="mt-12 pt-8 border-t border-gray-700">
+                    <p class="text-xl text-gray-400">Matt Uebel</p>
+                    <p class="text-lg text-gray-500">Solutions Architect Candidate</p>
                 </div>
             </div>
-            <p class="mt-10 text-lg text-gray-300">Later, we'll discuss a solution. But first, we need to understand a crucial component: the evolution of Generative AI.</p>
         </div>
-    </div>
-    
-    <!-- Slide 3: The Agenda -->
-    <div id="slide-3" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">Our Discussion in Two Parts</h1>
-            <ul class="space-y-6 text-2xl text-gray-300 max-w-2xl mx-auto">
-                <li class="flex items-start p-4 bg-gray-800/50 rounded-lg">
-                    <span class="font-black text-cyan-400 text-3xl mr-4">1</span>
-                    <div><strong class="text-white">The Technology:</strong> Explore how Generative AI is evolving from a chatbot into an agentic reasoning engine.</div>
-                </li>
-                <li class="flex items-start p-4 bg-gray-800/50 rounded-lg">
-                    <span class="font-black text-cyan-400 text-3xl mr-4">2</span>
-                    <div><strong class="text-white">The Solution & Implementation:</strong> Outline a system to solve our problem and a practical journey to build it.</div>
-                </li>
-            </ul>
-        </div>
-    </div>
 
-    <!-- Slide 4: The AI We See (Chatbot) -->
-    <div id="slide-4" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-6 text-center">Part 1: The AI We See is a Chatbot</h1>
-            <p class="text-center text-xl text-gray-400 mb-8">For many, GenAI is a clever conversationalist. We treat it like a person because it's the most intuitive way to interact.</p>
-            <div class="max-w-2xl h-80 mx-auto bg-gray-800 rounded-lg p-4 font-sans flex flex-col">
-                <div id="chat-window" class="flex-grow space-y-4 overflow-y-auto pr-2"></div>
-                <div id="typing-container" class="pt-2 flex justify-start hidden">
-                    <div class="bg-gray-700 text-gray-200 p-3 rounded-lg rounded-bl-none"><div class="typing-indicator flex space-x-1.5"><span></span><span></span><span></span></div></div>
+        <!-- Slide 2: The Problem Upfront -->
+        <div id="slide-2" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">The Problem: A Costly and Persistent Threat</h1>
+                <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto">Insecure software provisioning is a silent killer of productivity and security, leading to costly rework, project delays, and critical security incidents.</p>
+                <div class="grid md:grid-cols-3 gap-4 md:gap-8 text-white">
+                    <div class="bg-red-900/20 p-4 rounded-lg"><h3 class="text-xl md:text-2xl font-bold text-red-300">High Costs</h3><p class="mt-2 text-red-200/90 text-sm md:text-base">Fixing flaws in production is exponentially more expensive.</p></div>
+                    <div class="bg-yellow-900/20 p-4 rounded-lg"><h3 class="text-xl md:text-2xl font-bold text-yellow-300">Project Delays</h3><p class="mt-2 text-yellow-200/90 text-sm md:text-base">Last-minute security findings halt deployments.</p></div>
+                    <div class="bg-blue-900/20 p-4 rounded-lg"><h3 class="text-xl md:text-2xl font-bold text-blue-300">Major Incidents</h3><p class="mt-2 text-blue-200/90 text-sm md:text-base">Misconfigurations are a leading cause of data breaches.</p></div>
                 </div>
+                <p class="mt-10 text-lg text-gray-300">To solve this, we first need to understand the evolution of Generative AI.</p>
             </div>
         </div>
-    </div>
+    
+        <!-- Slide 3: The Agenda -->
+        <div id="slide-3" class="slide">
+            <div class="slide-content">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center">Our Discussion in Two Parts</h1>
+                <ul class="space-y-6 text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
+                    <li class="flex items-start p-4 bg-gray-800/50 rounded-lg"><span class="font-black text-cyan-400 text-3xl mr-4">1</span><div><strong class="text-white">The Technology:</strong> Explore how GenAI is evolving from a chatbot into a reasoning engine.</div></li>
+                    <li class="flex items-start p-4 bg-gray-800/50 rounded-lg"><span class="font-black text-cyan-400 text-3xl mr-4">2</span><div><strong class="text-white">The Solution:</strong> Outline a system to solve our problem and a practical journey to build it.</div></li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Slide 5: Beyond the Chatbot -->
-    <div id="slide-5" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">The Real Revolution: Code that Understands Language</h1>
-            <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">The true power is in translating human goals directly into machine-parsable syntax. It creates a strange but powerful new paradigm where we find ourselves writing plain language inside our scripts and codebases.</p>
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="text-lg font-bold text-white mb-2">Example: Natural Language to IaC</h3>
-                    <p class="text-sm text-gray-400 mb-2 italic">"Create a public S3 bucket."</p>
-                    <pre class="bg-gray-900 text-sm text-green-400 p-3 rounded"><code>resource "aws_s3_bucket" "b" {
-  bucket = "marketing-assets-12345"
-  acl    = "public-read"
-}</code></pre>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <h3 class="text-lg font-bold text-white mb-2">Example: Natural Language to SQL</h3>
-                     <p class="text-sm text-gray-400 mb-2 italic">"Show me sales by region for last quarter."</p>
-                    <pre class="bg-gray-900 text-sm text-blue-300 p-3 rounded"><code>SELECT region, SUM(amount)
-FROM sales
-WHERE sale_date >= '2025-01-01'
-AND sale_date < '2025-04-01'
-GROUP BY region;</code></pre>
-                </div>
+        <!-- Slide 4: The AI We See (Chatbot) -->
+        <div id="slide-4" class="slide">
+            <div class="slide-content">
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">Part 1: The AI We See is a Chatbot</h1>
+                <p class="text-center text-lg md:text-xl text-gray-400 mb-8">For many, GenAI is a clever conversationalist. We treat it like a person because it's the most intuitive way to interact.</p>
+                <div class="max-w-2xl h-80 mx-auto bg-gray-800 rounded-lg p-4 font-sans flex flex-col"><div id="chat-window" class="flex-grow space-y-4 overflow-y-auto pr-2"></div><div id="typing-container" class="pt-2 flex justify-start hidden"><div class="bg-gray-700 text-gray-200 p-3 rounded-lg rounded-bl-none"><div class="typing-indicator flex space-x-1.5"><span></span><span></span><span></span></div></div></div></div>
             </div>
         </div>
-    </div>
-    
-    <!-- Slide 6: Semantics to Syntax 2 (Python) -->
-    <div id="slide-6" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">Example: Human Language in a Python Script</h1>
-             <div class="w-full max-w-3xl mx-auto bg-black rounded-lg shadow-2xl font-mono text-sm">
-                <div class="p-2 bg-gray-800 rounded-t-lg text-gray-400">/usr/local/bin/python</div>
-                <div class="p-4 text-white">
-                    <p><span class="text-purple-400">def</span> <span class="text-blue-400">summarize_security_report</span>(report_text):</p>
-                    <p class="pl-4"><span class="text-gray-500"># The "prompt" is where semantics and syntax collide.</span></p>
-                    <p class="pl-4">prompt = <span class="text-yellow-300">f"""</span></p>
-                    <p class="pl-4 text-yellow-300">You are a security analyst. Please summarize the key</p>
-                    <p class="pl-4 text-yellow-300">vulnerabilities from the following report and list the</p>
-                    <p class="pl-4 text-yellow-300">top 3 most critical items.</p>
-                    <p class="pl-4 text-yellow-300">REPORT: {report_text}</p>
-                    <p class="pl-4 text-yellow-300">"""</span></p>
-                    <p class="pl-4"><span class="text-gray-500"># This looks like a normal API call, but it's powered by intent.</span></p>
-                    <p class="pl-4">response = genai_api.generate(prompt)</p>
-                    <p class="pl-4"><span class="text-purple-400">return</span> response.summary</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Slide 7: Karpathy Tweet -->
-    <div id="slide-7" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white mb-8">The Hottest New Programming Language</h1>
-             <div class="max-w-xl mx-auto bg-gray-800 rounded-xl shadow-lg p-6">
-                <div class="flex items-center mb-4">
-                    <img src="https://placehold.co/48x48/1DA1F2/FFFFFF?text=AK" alt="Profile" class="w-12 h-12 rounded-full">
-                    <div class="ml-4 text-left">
-                        <p class="font-bold text-white">Andrej Karpathy</p>
-                        <p class="text-gray-400">@karpathy</p>
+
+        <!-- Slide 5: Beyond the Chatbot -->
+        <div id="slide-5" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">The Real Revolution: Code that Understands Language</h1>
+                <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">The true power is in translating human goals directly into machine-parsable syntax. It creates a strange but powerful new paradigm where we find ourselves writing plain language inside our scripts and codebases.</p>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <h3 class="text-lg font-bold text-white mb-2">Example: Natural Language to IaC</h3>
+                        <p class="text-sm text-gray-400 mb-2 italic">"Create a public S3 bucket."</p>
+                        <pre class="bg-gray-900 text-sm text-green-400 p-3 rounded"><code>resource "aws_s3_bucket" "b" {
+      bucket = "marketing-assets-12345"
+      acl    = "public-read"
+    }</code></pre>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <h3 class="text-lg font-bold text-white mb-2">Example: Natural Language to SQL</h3>
+                         <p class="text-sm text-gray-400 mb-2 italic">"Show me sales by region for last quarter."</p>
+                        <pre class="bg-gray-900 text-sm text-blue-300 p-3 rounded"><code>SELECT region, SUM(amount)
+    FROM sales
+    WHERE sale_date >= '2025-01-01'
+    AND sale_date < '2025-04-01'
+    GROUP BY region;</code></pre>
                     </div>
                 </div>
-                <img src="https://mattuebel.github.io/blueprint-beacon/images/hottest_new_programming_language.png" 
-                     alt="Tweet from Andrej Karpathy that says The hottest new programming language is English"
-                     onerror="this.onerror=null; this.src='https://placehold.co/1200x675/17202A/FFFFFF?text=Image+Not+Found+-+Please+Replace+URL';"
-                     class="rounded-lg border border-gray-700 w-full h-auto">
-             </div>
-        </div>
-    </div>
-
-    <!-- Slide 8: The Shift to Agentic AI -->
-    <div id="slide-8" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">The Shift to Agentic AI</h1>
-            <div class="grid md:grid-cols-2 gap-8 text-center items-center">
-                <div class="border-2 border-dashed border-gray-600 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-white mb-2">Instructional Systems</h3>
-                    <p class="text-gray-400 mb-4">We predict behavior based on its explicit programming.</p>
-                    <p class="text-lg text-green-400 font-mono">Input -> Rules -> Output</p>
-                </div>
-                <div class="border-2 border-solid border-cyan-500 p-6 rounded-lg bg-cyan-900/20">
-                    <h3 class="text-xl font-bold text-white mb-2">Agentic Systems</h3>
-                    <p class="text-cyan-200 mb-4">We predict behavior by treating the AI as a rational agent with goals.</p>
-                    <p class="text-lg text-cyan-300 font-mono">Goal -> Beliefs -> Action</p>
-                </div>
             </div>
-            <p class="mt-10 text-center text-xl text-gray-400">This shift allows us to move from giving perfect instructions to simply stating our high-level intent.</p>
         </div>
-    </div>
-    
-    <!-- Slide 9: The Emerging Ecosystem for Agents -->
-    <div id="slide-9" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">An Emerging Ecosystem for Agents</h1>
-             <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">This agentic paradigm isn't just theoretical. A new technology stack is emerging to support it, exemplified by concepts like Anthropic's Model Context Protocol (MCP).</p>
-            <div class="grid md:grid-cols-2 gap-8 text-center">
-                <div class="bg-gray-800 p-6 rounded-lg">
-                     <h3 class="text-xl font-bold text-white mb-2">Agent-Readable Docs</h3>
-                    <p class="text-gray-400">Writing documentation not just for humans, but for AIs to understand and use tools, as pioneered by companies like Stripe.</p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold text-white mb-2">Model Context Protocol (MCP)</h3>
-                    <p class="text-gray-400">A standardized way for an AI agent to ask an application, "What can you do, and how do I talk to you?"—an API for AIs.</p>
+        
+        <!-- Slide 6: Semantics to Syntax 2 (Python) -->
+        <div id="slide-6" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">Example: Human Language in a Python Script</h1>
+                 <div class="w-full max-w-3xl mx-auto bg-black rounded-lg shadow-2xl font-mono text-sm">
+                    <div class="p-2 bg-gray-800 rounded-t-lg text-gray-400">/usr/local/bin/python</div>
+                    <div class="p-4 text-white">
+                        <p><span class="text-purple-400">def</span> <span class="text-blue-400">summarize_security_report</span>(report_text):</p>
+                        <p class="pl-4"><span class="text-gray-500"># The "prompt" is where semantics and syntax collide.</span></p>
+                        <p class="pl-4">prompt = <span class="text-yellow-300">f"""</span></p>
+                        <p class="pl-4 text-yellow-300">You are a security analyst. Please summarize the key</p>
+                        <p class="pl-4 text-yellow-300">vulnerabilities from the following report and list the</p>
+                        <p class="pl-4 text-yellow-300">top 3 most critical items.</p>
+                        <p class="pl-4 text-yellow-300">REPORT: {report_text}</p>
+                        <p class="pl-4 text-yellow-300">"""</span></p>
+                        <p class="pl-4"><span class="text-gray-500"># This looks like a normal API call, but it's powered by intent.</span></p>
+                        <p class="pl-4">response = genai_api.generate(prompt)</p>
+                        <p class="pl-4"><span class="text-purple-400">return</span> response.summary</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        
+        <!-- Slide 7: Karpathy Tweet -->
+        <div id="slide-7" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold text-white mb-8">The Hottest New Programming Language</h1>
+                 <div class="max-w-xl mx-auto bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/48x48/1DA1F2/FFFFFF?text=AK" alt="Profile" class="w-12 h-12 rounded-full">
+                        <div class="ml-4 text-left">
+                            <p class="font-bold text-white">Andrej Karpathy</p>
+                            <p class="text-gray-400">@karpathy</p>
+                        </div>
+                    </div>
+                    <img src="https://mattuebel.github.io/blueprint-beacon/images/hottest_new_programming_language.png" 
+                         alt="Tweet from Andrej Karpathy that says The hottest new programming language is English"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1200x675/17202A/FFFFFF?text=Image+Not+Found+-+Please+Replace+URL';"
+                         class="rounded-lg border border-gray-700 w-full h-auto">
+                 </div>
+            </div>
+        </div>
     
-    <!-- Slide 10: Vercel Example -->
-    <div id="slide-10" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white mb-8">Example: Agent-Readable Documentation</h1>
-             <div class="max-w-2xl mx-auto bg-black rounded-xl shadow-lg p-1">
-                <img src="https://mattuebel.github.io/blueprint-beacon/images/vercel_llms_docs.png"
-                     alt="Vercel's llms.txt file showing markdown formatted documentation for an AI agent"
-                     onerror="this.onerror=null; this.src='https://placehold.co/1200x675/17202A/FFFFFF?text=Image+Not+Found';"
-                     class="rounded-lg w-full h-auto">
-             </div>
-             <p class="mt-6 text-xl text-gray-400">This is a real-world example from Vercel: a simple <code class="bg-gray-700 text-yellow-300 px-1 py-0.5 rounded text-sm">llms.txt</code> file providing clean, structured markdown for an AI to consume.</p>
+        <!-- Slide 8: The Shift to Agentic AI -->
+        <div id="slide-8" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">The Shift to Agentic AI</h1>
+                <div class="grid md:grid-cols-2 gap-8 text-center items-center">
+                    <div class="border-2 border-dashed border-gray-600 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold text-white mb-2">Instructional Systems</h3>
+                        <p class="text-gray-400 mb-4">We predict behavior based on its explicit programming.</p>
+                        <p class="text-lg text-green-400 font-mono">Input -> Rules -> Output</p>
+                    </div>
+                    <div class="border-2 border-solid border-cyan-500 p-6 rounded-lg bg-cyan-900/20">
+                        <h3 class="text-xl font-bold text-white mb-2">Agentic Systems</h3>
+                        <p class="text-cyan-200 mb-4">We predict behavior by treating the AI as a rational agent with goals.</p>
+                        <p class="text-lg text-cyan-300 font-mono">Goal -> Beliefs -> Action</p>
+                    </div>
+                </div>
+                <p class="mt-10 text-center text-xl text-gray-400">This shift allows us to move from giving perfect instructions to simply stating our high-level intent.</p>
+            </div>
         </div>
-    </div>
-
-    <!-- Slide 11: NEW Bookend for Part 1 -->
-    <div id="slide-11" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-5xl font-bold text-white mb-6">So... we have a powerful new technology.</h1>
-            <p class="text-3xl text-gray-400">Now, let's apply it.</p>
-        </div>
-    </div>
-
-    <!-- Slide 12: Applying AI to a Costly Problem -->
-    <div id="slide-12" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white mb-4">Applying Agentic AI to a Costly Problem</h1>
-            <p class="text-xl text-gray-400 mb-8">Let's return to the problem we started with: the exponential cost of discovering security flaws too late.</p>
-            <div class="relative w-full h-64 mt-4">
-                <svg class="absolute w-full h-full" viewBox="0 0 1000 250" preserveAspectRatio="none"><path d="M 50 220 C 500 220, 700 220, 950 20" stroke="#374151" stroke-width="8" fill="none" stroke-linecap="round"/></svg>
-                <div class="absolute flex flex-col items-center" style="left: 5%; top: 65%;">
-                    <div class="p-4 bg-cyan-500 rounded-full shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 01-6.23-.693L4.2 15.3m15.6 0c1.626.408 3.11 1.536 3.11 3.23V19.5A2.25 2.25 0 0118.75 21h-13.5A2.25 2.25 0 013 19.5v-1.04c0-1.694 1.484-2.822 3.11-3.23" /></svg>
+        
+        <!-- Slide 9: The Emerging Ecosystem for Agents -->
+        <div id="slide-9" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">An Emerging Ecosystem for Agents</h1>
+                 <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">This agentic paradigm isn't just theoretical. A new technology stack is emerging to support it, exemplified by concepts like Anthropic's Model Context Protocol (MCP).</p>
+                <div class="grid md:grid-cols-2 gap-8 text-center">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                         <h3 class="text-xl font-bold text-white mb-2">Agent-Readable Docs</h3>
+                        <p class="text-gray-400">Writing documentation not just for humans, but for AIs to understand and use tools, as pioneered by companies like Stripe.</p>
                     </div>
-                    <h3 class="mt-2 text-lg font-bold">Design</h3>
-                    <p class="text-sm text-cyan-400 font-mono">Cost: 1x</p>
-                </div>
-                <div class="absolute flex flex-col items-center" style="left: 33%; top: 62%;">
-                    <div class="p-4 bg-cyan-600 rounded-full shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold text-white mb-2">Model Context Protocol (MCP)</h3>
+                        <p class="text-gray-400">A standardized way for an AI agent to ask an application, "What can you do, and how do I talk to you?"—an API for AIs.</p>
                     </div>
-                    <h3 class="mt-2 text-lg font-bold">Implement</h3>
-                    <p class="text-sm text-cyan-400 font-mono">Cost: ~6.5x</p>
-                </div>
-                <div class="absolute flex flex-col items-center" style="left: 66%; top: 40%;">
-                    <div class="p-4 bg-indigo-600 rounded-full shadow-lg">
-                       <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <h3 class="mt-2 text-lg font-bold">Testing</h3>
-                    <p class="text-sm text-indigo-400 font-mono">Cost: ~15x</p>
-                </div>
-                <div class="absolute flex flex-col items-center" style="left: 95%; top: 0; transform: translateX(-50%);">
-                    <div class="p-4 bg-red-600 rounded-full shadow-lg ring-4 ring-red-500/50">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.63 2.18a14.98 14.98 0 00-5.84 7.38m5.84 2.58a14.98 14.98 0 00-5.84-2.58m5.84 2.58v4.8m0 0a6 6 0 01-5.84-7.38m5.84 7.38a6 6 0 017.38-5.84m-7.38 5.84L15.59 14.37" /></svg>
-                    </div>
-                    <h3 class="mt-2 text-lg font-bold">Production</h3>
-                    <p class="text-sm text-red-400 font-mono">Cost: >30x</p>
                 </div>
             </div>
         </div>
-    </div>
+        
+        <!-- Slide 10: Vercel Example -->
+        <div id="slide-10" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold text-white mb-8">Example: Agent-Readable Documentation</h1>
+                 <div class="max-w-2xl mx-auto bg-black rounded-xl shadow-lg p-1">
+                    <img src="https://mattuebel.github.io/blueprint-beacon/images/vercel_llms_docs.png"
+                         alt="Vercel's llms.txt file showing markdown formatted documentation for an AI agent"
+                         onerror="this.onerror=null; this.src='https://placehold.co/1200x675/17202A/FFFFFF?text=Image+Not+Found';"
+                         class="rounded-lg w-full h-auto">
+                 </div>
+                 <p class="mt-6 text-xl text-gray-400">This is a real-world example from Vercel: a simple <code class="bg-gray-700 text-yellow-300 px-1 py-0.5 rounded text-sm">llms.txt</code> file providing clean, structured markdown for an AI to consume.</p>
+            </div>
+        </div>
     
-    <!-- Slide 13: The Solution Intro -->
-    <div id="slide-13" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white">Part 2: The Solution & Implementation</h1>
-            <h2 class="text-2xl text-gray-400 mt-2 mb-10 italic">An Automated Security Review System for Design Documents</h2>
-            <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">The solution is a system that applies agentic AI to proactively analyze planning documents. It works in four stages:</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0l3.172 3.172a1 1 0 010 1.414L5 15m14-4l-3.172-3.172a1 1 0 00-1.414 0L12 15m-2-2l2 2m0 0l2-2m-2 2v-2m0 2h.01" /></svg>
-                    <h3 class="font-bold text-white text-lg">1. Ingest & Correlate</h3>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    <h3 class="font-bold text-white text-lg">2. Detect Intent</h3>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <h3 class="font-bold text-white text-lg">3. Analyze vs. Corpus</h3>
-                </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
-                    <svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6H8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" /></svg>
-                    <h3 class="font-bold text-white text-lg">4. Flag & Advise</h3>
+        <!-- Slide 11: NEW Bookend for Part 1 -->
+        <div id="slide-11" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-5xl font-bold text-white mb-6">So... we have a powerful new technology.</h1>
+                <p class="text-3xl text-gray-400">Now, let's apply it.</p>
+            </div>
+        </div>
+    
+        <!-- Slide 12: Applying AI to a Costly Problem -->
+        <div id="slide-12" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold text-white mb-4">Applying Agentic AI to a Costly Problem</h1>
+                <p class="text-xl text-gray-400 mb-8">Let's return to the problem we started with: the exponential cost of discovering security flaws too late.</p>
+                <div class="relative w-full h-64 mt-4">
+                    <svg class="absolute w-full h-full" viewBox="0 0 1000 250" preserveAspectRatio="none"><path d="M 50 220 C 500 220, 700 220, 950 20" stroke="#374151" stroke-width="8" fill="none" stroke-linecap="round"/></svg>
+                    <div class="absolute flex flex-col items-center" style="left: 5%; top: 65%;">
+                        <div class="p-4 bg-cyan-500 rounded-full shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 01-6.23-.693L4.2 15.3m15.6 0c1.626.408 3.11 1.536 3.11 3.23V19.5A2.25 2.25 0 0118.75 21h-13.5A2.25 2.25 0 013 19.5v-1.04c0-1.694 1.484-2.822 3.11-3.23" /></svg></div>
+                        <h3 class="mt-2 text-lg font-bold">Design</h3><p class="text-sm text-cyan-400 font-mono">Cost: 1x</p>
+                    </div>
+                    <div class="absolute flex flex-col items-center" style="left: 33%; top: 62%;">
+                        <div class="p-4 bg-cyan-600 rounded-full shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg></div>
+                        <h3 class="mt-2 text-lg font-bold">Implement</h3><p class="text-sm text-cyan-400 font-mono">Cost: ~6.5x</p>
+                    </div>
+                    <div class="absolute flex flex-col items-center" style="left: 66%; top: 40%;">
+                        <div class="p-4 bg-indigo-600 rounded-full shadow-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="mt-2 text-lg font-bold">Testing</h3><p class="text-sm text-indigo-400 font-mono">Cost: ~15x</p>
+                    </div>
+                    <div class="absolute flex flex-col items-center" style="left: 95%; top: 0; transform: translateX(-50%);">
+                        <div class="p-4 bg-red-600 rounded-full shadow-lg ring-4 ring-red-500/50"><svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.63 2.18a14.98 14.98 0 00-5.84 7.38m5.84 2.58a14.98 14.98 0 00-5.84-2.58m5.84 2.58v4.8m0 0a6 6 0 01-5.84-7.38m5.84 7.38a6 6 0 017.38-5.84m-7.38 5.84L15.59 14.37" /></svg></div>
+                        <h3 class="mt-2 text-lg font-bold">Production</h3><p class="text-sm text-red-400 font-mono">Cost: >30x</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Slide 14: Mock Demo -->
-    <div id="slide-14" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-2 text-center">The System in Action</h1>
-            <p class="text-center text-cyan-400 font-semibold mb-6">[ Mock Demo ]</p>
-            <div class="bg-gray-800 rounded-lg p-8 max-w-4xl mx-auto">
-                <h3 class="text-xl text-gray-300 mb-2">Enter your infrastructure plan:</h3>
-                <textarea id="planInput" class="w-full h-24 bg-gray-900 rounded-md text-lg italic text-white p-4"
-                >...For the user profile pictures, we'll just create a new public S3 bucket to make them easy to access from the web client.</textarea>
-                <button id="analyzeBtn" class="mt-4 w-full flex items-center justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:cursor-wait">
-                    <span id="btnText">✨ Run Security Analysis</span>
-                </button>
-                <div id="progressBarContainer" class="w-full bg-gray-700 rounded-full h-2.5 mt-4 hidden">
-                    <div id="progressBar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
-                </div>
-                <div id="beaconResult" class="mt-6 border-l-4 border-gray-600 pl-4 py-2 bg-gray-700/20 rounded-r-md min-h-[140px]">
-                    <p class="font-bold text-gray-400">[Automated Review]: Analysis will appear here...</p>
-                    <p class="text-gray-500">Enter a plan above and click the button to see the AI in action.</p>
+        
+        <!-- Slide 13: The Solution Intro -->
+        <div id="slide-13" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold text-white">Part 2: The Solution & Implementation</h1>
+                <h2 class="text-2xl text-gray-400 mt-2 mb-10 italic">An Automated Security Review System for Design Documents</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">The solution is a system that applies agentic AI to proactively analyze planning documents. It works in four stages:</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+                    <div class="bg-gray-800 p-4 rounded-lg"><svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0l3.172 3.172a1 1 0 010 1.414L5 15m14-4l-3.172-3.172a1 1 0 00-1.414 0L12 15m-2-2l2 2m0 0l2-2m-2 2v-2m0 2h.01" /></svg><h3 class="font-bold text-white text-lg">1. Ingest & Correlate</h3></div>
+                    <div class="bg-gray-800 p-4 rounded-lg"><svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg><h3 class="font-bold text-white text-lg">2. Detect Intent</h3></div>
+                    <div class="bg-gray-800 p-4 rounded-lg"><svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><h3 class="font-bold text-white text-lg">3. Analyze vs. Corpus</h3></div>
+                    <div class="bg-gray-800 p-4 rounded-lg"><svg class="h-12 w-12 mx-auto mb-4 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6H8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" /></svg><h3 class="font-bold text-white text-lg">4. Flag & Advise</h3></div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Slide 15: Culture & Controls -->
-    <div id="slide-15" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">Adoption: Culture and Controls</h1>
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <div class="bg-red-900/20 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-red-300 mb-4 text-center">Recognizing the Challenge</h3>
-                    <p class="text-red-200/90">A fully automated system can be alarming. We must address potential cultural friction head-on by acknowledging concerns like the "chilling effect" on brainstorming or alert fatigue.</p>
-                </div>
-                 <div class="bg-green-900/20 p-6 rounded-lg">
-                    <h3 class="text-2xl font-bold text-green-300 mb-4 text-center">Framework for Trust</h3>
-                    <p class="text-green-200/90">Phased adoption via ad-hoc, self-serve, and active functions helps build trust. A clear "What, Why, How" message is critical: this is a safety net to *assist*, not a surveillance tool to *report*.</p>
+        
+        <!-- Slide 14: Mock Demo -->
+        <div id="slide-14" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-2 text-center">The System in Action</h1>
+                <p class="text-center text-cyan-400 font-semibold mb-6">[ Mock Demo ]</p>
+                <div class="bg-gray-800 rounded-lg p-8 max-w-4xl mx-auto">
+                    <h3 class="text-xl text-gray-300 mb-2">Enter your infrastructure plan:</h3>
+                    <textarea id="planInput" class="w-full h-24 bg-gray-900 rounded-md text-lg italic text-white p-4">...For the user profile pictures, we'll just create a new public S3 bucket to make them easy to access from the web client.</textarea>
+                    <button id="analyzeBtn" class="mt-4 w-full flex items-center justify-center bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:cursor-wait">
+                        <span id="btnText">✨ Run Security Analysis</span>
+                    </button>
+                    <div id="progressBarContainer" class="w-full bg-gray-700 rounded-full h-2.5 mt-4 hidden">
+                        <div id="progressBar" class="bg-cyan-500 h-2.5 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div id="beaconResult" class="mt-6 border-l-4 border-gray-600 pl-4 py-2 bg-gray-700/20 rounded-r-md min-h-[140px]">
+                        <p class="font-bold text-gray-400">[Automated Review]: Analysis will appear here...</p>
+                        <p class="text-gray-500">Enter a plan above and click the button to see the AI in action.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     
-    <!-- Slide 16: Enterprise Controls -->
-    <div id="slide-16" class="slide">
-        <div class="slide-content">
-             <h1 class="text-4xl font-bold text-white mb-10 text-center">Building an Enterprise-Ready System</h1>
-             <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">To succeed, the system must be built with robust, transparent controls from day one.</p>
-             <div class="grid md:grid-cols-2 gap-6 text-center text-white">
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-2">Privacy Controls</h3>
-                    <p class="text-gray-400">Ability to exclude sensitive documents and mask PII.</p>
+        <!-- Slide 15: Culture & Controls -->
+        <div id="slide-15" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">Adoption: Culture and Controls</h1>
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-red-900/20 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-red-300 mb-4 text-center">Recognizing the Challenge</h3>
+                        <p class="text-red-200/90">A fully automated system can be alarming. We must address potential cultural friction head-on by acknowledging concerns like the "chilling effect" on brainstorming or alert fatigue.</p>
+                    </div>
+                     <div class="bg-green-900/20 p-6 rounded-lg">
+                        <h3 class="text-2xl font-bold text-green-300 mb-4 text-center">Framework for Trust</h3>
+                        <p class="text-green-200/90">Phased adoption via ad-hoc, self-serve, and active functions helps build trust. A clear "What, Why, How" message is critical: this is a safety net to *assist*, not a surveillance tool to *report*.</p>
+                    </div>
                 </div>
-                 <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-2">Audit Trails</h3>
-                    <p class="text-gray-400">Log all findings and user interactions for review and compliance.</p>
-                </div>
-                 <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-2">RBAC</h3>
-                    <p class="text-gray-400">Manage who can configure policies, view findings, or grant exceptions.</p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="text-xl font-bold mb-2">Model Governance</h3>
-                    <p class="text-gray-400">Version, track, and approve the AI models used for analysis.</p>
-                </div>
-             </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Slide 17: Implementation Journey -->
-    <div id="slide-17" class="slide">
-        <div class="slide-content">
-             <h1 class="text-4xl font-bold text-white mb-10 text-center">The Implementation Journey</h1>
-             <div class="relative w-full">
-                <!-- Line -->
-                <div class="absolute top-5 left-0 mt-1 w-full h-1 bg-gray-700"></div>
-                <div class="relative flex justify-between">
-                    <div class="flex-1 text-center px-2">
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">1</div>
-                        <h3 class="mt-4 text-lg font-bold text-white">Manual</h3>
-                        <p class="text-sm text-gray-400">A simple web tool for developers to self-check plans.</p>
+        
+        <!-- Slide 16: Enterprise Controls -->
+        <div id="slide-16" class="slide">
+            <div class="slide-content">
+                 <h1 class="text-4xl font-bold text-white mb-10 text-center">Building an Enterprise-Ready System</h1>
+                 <p class="text-center text-xl text-gray-400 mb-8 max-w-3xl mx-auto">To succeed, the system must be built with robust, transparent controls from day one.</p>
+                 <div class="grid md:grid-cols-2 gap-6 text-center text-white">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2">Privacy Controls</h3>
+                        <p class="text-gray-400">Ability to exclude sensitive documents and mask PII.</p>
                     </div>
-                    <div class="flex-1 text-center px-2">
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">2</div>
-                        <h3 class="mt-4 text-lg font-bold text-white">Advisory</h3>
-                        <p class="text-sm text-gray-400">The system passively monitors document stores and adds comments.</p>
+                     <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2">Audit Trails</h3>
+                        <p class="text-gray-400">Log all findings and user interactions for review and compliance.</p>
                     </div>
-                    <div class="flex-1 text-center px-2">
-                        <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">3</div>
-                        <h3 class="mt-4 text-lg font-bold text-white">Active</h3>
-                        <p class="text-sm text-gray-400">The system acts as a blocking quality gate in the CI/CD pipeline.</p>
+                     <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2">RBAC</h3>
+                        <p class="text-gray-400">Manage who can configure policies, view findings, or grant exceptions.</p>
                     </div>
-                </div>
-             </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2">Model Governance</h3>
+                        <p class="text-gray-400">Version, track, and approve the AI models used for analysis.</p>
+                    </div>
+                 </div>
+            </div>
         </div>
-    </div>
     
-    <!-- Slide 18: Active Check (CI/CD) -->
-    <div id="slide-18" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Active Check (CI/CD)</h1>
-            <div class="w-full max-w-4xl mx-auto bg-black rounded-lg shadow-2xl font-mono text-sm">
-                <div class="p-2 bg-gray-800 rounded-t-lg flex items-center">
-                    <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
-                    <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
-                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <p class="text-center flex-1 text-gray-400">Pull Request #42: New Marketing Service</p>
-                </div>
-                <div class="p-4 text-white">
-                    <p><span class="text-green-400">✓</span> <span class="text-gray-400">Linting...</span> <span class="text-green-400">OK</span></p>
-                    <p><span class="text-green-400">✓</span> <span class="text-gray-400">Formatting Check...</span> <span class="text-green-400">OK</span></p>
-                    <div class="mt-2 p-2 bg-red-900/50 rounded-md">
-                        <p><span class="text-red-500 font-bold">✗</span> <span class="text-gray-200 font-bold">Automated Security Review...</span> <span class="text-red-500 font-bold">FAILED</span></p>
-                        <div class="pl-6 mt-2 border-l-2 border-red-500/50 text-red-300">
-                           <p class="font-bold">Heads up! I've identified a potential risk in this plan.</p>
-                           <p class="mt-1"><span class="font-bold">Risk:</span> Publicly accessible S3 buckets are a common source of data breaches.</p>
-                           <p><span class="font-bold">Recommendation:</span> Use CloudFront with signed URLs instead.</p>
-                           <p><span class="font-bold">Policy:</span> See CLOUD-GUIDE-07.1</p>
+        <!-- Slide 17: Implementation Journey -->
+        <div id="slide-17" class="slide">
+            <div class="slide-content">
+                 <h1 class="text-4xl font-bold text-white mb-10 text-center">The Implementation Journey</h1>
+                 <div class="relative w-full">
+                    <!-- Line -->
+                    <div class="absolute top-5 left-0 mt-1 w-full h-1 bg-gray-700"></div>
+                    <div class="relative flex justify-between">
+                        <div class="flex-1 text-center px-2">
+                            <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">1</div>
+                            <h3 class="mt-4 text-lg font-bold text-white">Manual</h3>
+                            <p class="text-sm text-gray-400">A simple web tool for developers to self-check plans.</p>
+                        </div>
+                        <div class="flex-1 text-center px-2">
+                            <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">2</div>
+                            <h3 class="mt-4 text-lg font-bold text-white">Advisory</h3>
+                            <p class="text-sm text-gray-400">The system passively monitors document stores and adds comments.</p>
+                        </div>
+                        <div class="flex-1 text-center px-2">
+                            <div class="w-8 h-8 rounded-full bg-cyan-500 border-4 border-gray-900 flex items-center justify-center font-bold text-white z-10 mx-auto">3</div>
+                            <h3 class="mt-4 text-lg font-bold text-white">Active</h3>
+                            <p class="text-sm text-gray-400">The system acts as a blocking quality gate in the CI/CD pipeline.</p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+        
+        <!-- Slide 18: Active Check (CI/CD) -->
+        <div id="slide-18" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Active Check (CI/CD)</h1>
+                <div class="w-full max-w-4xl mx-auto bg-black rounded-lg shadow-2xl font-mono text-sm">
+                    <div class="p-2 bg-gray-800 rounded-t-lg flex items-center">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div><div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div><div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <p class="text-center flex-1 text-gray-400">Pull Request #42: New Marketing Service</p>
+                    </div>
+                    <div class="p-4 text-white">
+                        <p><span class="text-green-400">✓</span> <span class="text-gray-400">Linting...</span> <span class="text-green-400">OK</span></p>
+                        <p><span class="text-green-400">✓</span> <span class="text-gray-400">Formatting Check...</span> <span class="text-green-400">OK</span></p>
+                        <div class="mt-2 p-2 bg-red-900/50 rounded-md">
+                            <p><span class="text-red-500 font-bold">✗</span> <span class="text-gray-200 font-bold">Automated Security Review...</span> <span class="text-red-500 font-bold">FAILED</span></p>
+                            <div class="pl-6 mt-2 border-l-2 border-red-500/50 text-red-300">
+                               <p class="font-bold">Heads up! I've identified a potential risk in this plan.</p>
+                               <p class="mt-1"><span class="font-bold">Risk:</span> Publicly accessible S3 buckets are a common source of data breaches.</p>
+                               <p><span class="font-bold">Recommendation:</span> Use CloudFront with signed URLs instead.</p>
+                               <p><span class="font-bold">Policy:</span> See CLOUD-GUIDE-07.1</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Slide 19: ChatOps Check -->
-    <div id="slide-19" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Interactive Check (ChatOps)</h1>
-            <div class="w-full max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-2xl font-sans text-sm p-4">
-                <div class="flex items-center border-b border-gray-700 pb-2 mb-4">
-                    <span class="font-bold text-white text-lg"># proj-alpha-dev</span>
-                </div>
-                <!-- Message History -->
-                <div class="flex mb-4">
-                    <img src="https://placehold.co/40x40/7e22ce/FFFFFF?text=AU" alt="User Avatar" class="w-10 h-10 rounded mr-3">
-                    <div>
-                        <p class="font-bold text-white">Alice</p>
-                        <p class="text-gray-300">Okay team, for the user profile pictures, let's just create a new public S3 bucket. That'll make them easy to access from the web client.</p>
-                    </div>
-                </div>
-                <div class="flex mb-4">
-                    <img src="https://placehold.co/40x40/166534/FFFFFF?text=BU" alt="User Avatar" class="w-10 h-10 rounded mr-3">
-                    <div>
-                        <p class="font-bold text-white">Bob</p>
-                        <p class="text-gray-300">Sounds good to me, much simpler than setting up a whole CDN and signing URLs.</p>
-                    </div>
-                </div>
-                 <div class="flex mb-4">
-                    <img src="https://placehold.co/40x40/7e22ce/FFFFFF?text=AU" alt="User Avatar" class="w-10 h-10 rounded mr-3">
-                    <div>
-                        <p class="font-bold text-white">Alice</p>
-                        <p class="text-gray-300"><span class="text-blue-400 bg-blue-900/50 px-1 rounded">@Automated Review</span> can you check our plan in the last 2 messages?</p>
-                    </div>
-                </div>
-                <!-- Bot Response -->
-                <div class="flex">
-                    <img src="https://placehold.co/40x40/1d4ed8/FFFFFF?text=BOT" alt="Bot Avatar" class="w-10 h-10 rounded mr-3">
-                    <div class="flex-1">
-                        <p class="font-bold text-white">Automated Review <span class="bg-gray-700 text-xs font-mono p-1 rounded">BOT</span></p>
-                        <div class="mt-1 border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-100/10 rounded-r-md">
-                            <p class="font-bold text-yellow-300">Heads up! A plan to create a public S3 bucket was detected.</p>
-                            <ul class="mt-2 list-disc list-inside text-yellow-200/90 text-xs space-y-1">
-                                <li><strong>Risk:</strong> Public S3 buckets can lead to data exposure if misconfigured.</li>
-                                <li><strong>Policy:</strong> See `SEC-POL-04.2: Data Classification`.</li>
-                            </ul>
-                        </div>
-                    </div>
+        
+        <!-- Slide 19: ChatOps Check -->
+        <div id="slide-19" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Interactive Check (ChatOps)</h1>
+                <div class="w-full max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-2xl font-sans text-sm p-4">
+                    <div class="flex items-center border-b border-gray-700 pb-2 mb-4"><span class="font-bold text-white text-lg"># proj-alpha-dev</span></div>
+                    <div class="flex mb-4"><img src="https://placehold.co/40x40/7e22ce/FFFFFF?text=AU" alt="User Avatar" class="w-10 h-10 rounded mr-3"><div><p class="font-bold text-white">Alice</p><p class="text-gray-300">Okay team, for the user profile pictures, let's just create a new public S3 bucket. That'll make them easy to access from the web client.</p></div></div>
+                    <div class="flex mb-4"><img src="https://placehold.co/40x40/166534/FFFFFF?text=BU" alt="User Avatar" class="w-10 h-10 rounded mr-3"><div><p class="font-bold text-white">Bob</p><p class="text-gray-300">Sounds good to me, much simpler than setting up a whole CDN and signing URLs.</p></div></div>
+                     <div class="flex mb-4"><img src="https://placehold.co/40x40/7e22ce/FFFFFF?text=AU" alt="User Avatar" class="w-10 h-10 rounded mr-3"><div><p class="font-bold text-white">Alice</p><p class="text-gray-300"><span class="text-blue-400 bg-blue-900/50 px-1 rounded">@Automated Review</span> can you check our plan in the last 2 messages?</p></div></div>
+                    <div class="flex"><img src="https://placehold.co/40x40/1d4ed8/FFFFFF?text=BOT" alt="Bot Avatar" class="w-10 h-10 rounded mr-3"><div class="flex-1"><p class="font-bold text-white">Automated Review <span class="bg-gray-700 text-xs font-mono p-1 rounded">BOT</span></p><div class="mt-1 border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-100/10 rounded-r-md"><p class="font-bold text-yellow-300">Heads up! A plan to create a public S3 bucket was detected.</p><ul class="mt-2 list-disc list-inside text-yellow-200/90 text-xs space-y-1"><li><strong>Risk:</strong> Public S3 buckets can lead to data exposure if misconfigured.</li><li><strong>Policy:</strong> See `SEC-POL-04.2: Data Classification`.</li></ul></div></div></div>
                 </div>
             </div>
         </div>
-    </div>
+    
+        <!-- Slide 20: Passive Check -->
+         <div id="slide-20" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Passive Check</h1>
+                <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-2xl font-sans text-gray-800 p-8">
+                     <h2 class="text-3xl font-bold border-b pb-2">Project Alpha - Design Doc</h2>
+                     <p class="mt-4 text-lg">...and to simplify access for the web client, we'll just create a new public S3 bucket for all the user profile pictures.</p>
+                     <div class="mt-6 border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-100 rounded-r-md">
+                        <p class="font-bold text-yellow-800">[Automated Review]: Heads up!</p>
+                        <p class="text-yellow-700">A plan to create a public S3 bucket was detected.</p>
+                        <ul class="mt-2 list-disc list-inside text-yellow-700/80 text-sm space-y-1">
+                            <li><strong>Risk:</strong> Public S3 buckets can lead to data exposure if misconfigured.</li>
+                            <li><strong>Policy:</strong> See `SEC-POL-04.2: Data Classification`.</li>
+                            <li><strong>Recommendation:</strong> Consider using CloudFront with signed URLs.</li>
+                        </ul>
+                    </div>
+                    <p class="mt-4 text-lg">This allows us to maintain a central repository for these assets...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 21: Value Proposition -->
+        <div id="slide-21" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold text-white mb-6">The Value of Automated Security Review</h1>
+                <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">This isn't just a scanner; it's a proactive system that scales security expertise and improves developer velocity.</p>
+                <div class="grid md:grid-cols-2 gap-8 text-left text-lg text-gray-300">
+                    <div class="bg-gray-800 p-6 rounded-lg"><h3 class="font-bold text-white mb-2">✓ Shift Security Left, For Real</h3><p class="text-gray-400">Identify and fix design flaws before a single line of insecure code is written.</p></div>
+                    <div class="bg-gray-800 p-6 rounded-lg"><h3 class="font-bold text-white mb-2">✓ Scale Your Security Team</h3><p class="text-gray-400">Embed the knowledge of your best security architects into an automated system.</p></div>
+                    <div class="bg-gray-800 p-6 rounded-lg"><h3 class="font-bold text-white mb-2">✓ Accelerate Development</h3><p class="text-gray-400">Reduce late-stage rework and eliminate entire categories of vulnerabilities.</p></div>
+                     <div class="bg-gray-800 p-6 rounded-lg"><h3 class="font-bold text-white mb-2">✓ Educate and Empower</h3><p class="text-gray-400">Provide developers with immediate, context-aware feedback to build their security skills.</p></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 22: Conclusion -->
+        <div id="slide-22" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-5xl md:text-6xl font-black text-white">Thank You & Discussion</h1>
+                <div class="mt-10 max-w-3xl mx-auto text-lg space-y-4 text-gray-300">
+                    <p>By moving beyond the chatbot, we can use GenAI as an integrated <span class="text-cyan-400 font-bold">reasoning engine</span>.</p>
+                    <p>We can apply this engine to solve the expensive problem of <span class="text-cyan-400 font-bold">insecure design</span>.</p>
+                    <p>The result is a system that <span class="text-cyan-400 font-bold">proactively guides and secures</span> our development lifecycle from the very beginning.</p>
+                </div>
+                <div class="mt-12 p-6 bg-gray-800/50 rounded-lg max-w-4xl mx-auto">
+                    <h3 class="font-bold text-white text-xl">The Splunk Connection</h3>
+                    <p class="mt-2 text-gray-400">"A system like this is fundamentally a data problem. It relies on ingesting diverse, unstructured telemetry, correlating it, and running advanced analytics to surface actionable insights. This aligns perfectly with Splunk's core mission of turning data into doing."</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Slide 23: Sources -->
+        <div id="slide-23" class="slide">
+            <div class="slide-content">
+                <h1 class="text-4xl font-bold text-white mb-10 text-center">Sources & Further Reading</h1>
+                <ul class="space-y-4 text-lg text-gray-300">
+                    <li class="p-3 bg-gray-800/50 rounded-lg"><a href="https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf" target="_blank" class="text-white font-bold block hover:text-cyan-300">NIST: Cost of Defect Correction</a></li>
+                     <li class="p-3 bg-gray-800/50 rounded-lg"><a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" class="text-white font-bold block hover:text-cyan-300">Anthropic: Model Context Protocol (MCP)</a></li>
+                     <li class="p-3 bg-gray-800/50 rounded-lg"><a href="https://docs.stripe.com/building-with-llms" target="_blank" class="text-white font-bold block hover:text-cyan-300">Stripe: Building with LLMs</a></li>
+                     <li class="p-3 bg-gray-800/50 rounded-lg"><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/" target="_blank" class="text-white font-bold block hover:text-cyan-300">OWASP Top 10: Security Misconfiguration</a></li>
+                     <li class="p-3 bg-gray-800/50 rounded-lg"><a href="https://www.ibm.com/reports/data-breach" target="_blank" class="text-white font-bold block hover:text-cyan-300">IBM: Cost of a Data Breach Report</a></li>
+                </ul>
+            </div>
+        </div>
 
-    <!-- Slide 20: Passive Check -->
-     <div id="slide-20" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-6 text-center">Example: The Passive Check</h1>
-            <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-2xl font-sans text-gray-800 p-8">
-                 <h2 class="text-3xl font-bold border-b pb-2">Project Alpha - Design Doc</h2>
-                 <p class="mt-4 text-lg">...and to simplify access for the web client, we'll just create a new public S3 bucket for all the user profile pictures.</p>
-                 <div class="mt-6 border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-100 rounded-r-md">
-                    <p class="font-bold text-yellow-800">[Automated Review]: Heads up!</p>
-                    <p class="text-yellow-700">A plan to create a public S3 bucket was detected.</p>
-                    <ul class="mt-2 list-disc list-inside text-yellow-700/80 text-sm space-y-1">
-                        <li><strong>Risk:</strong> Public S3 buckets can lead to data exposure if misconfigured.</li>
-                        <li><strong>Policy:</strong> See `SEC-POL-04.2: Data Classification`.</li>
-                        <li><strong>Recommendation:</strong> Consider using CloudFront with signed URLs.</li>
-                    </ul>
-                </div>
-                <p class="mt-4 text-lg">This allows us to maintain a central repository for these assets...</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Slide 21: Value Proposition -->
-    <div id="slide-21" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-4xl font-bold text-white mb-6">The Value of Automated Security Review</h1>
-            <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">This isn't just a scanner; it's a proactive system that scales security expertise and improves developer velocity.</p>
-            <div class="grid md:grid-cols-2 gap-8 text-left text-lg text-gray-300">
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-white mb-2">✓ Shift Security Left, For Real</h3>
-                    <p class="text-gray-400">Identify and fix design flaws before a single line of insecure code is written.</p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-white mb-2">✓ Scale Your Security Team</h3>
-                    <p class="text-gray-400">Embed the knowledge of your best security architects into an automated system.</p>
-                </div>
-                <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-white mb-2">✓ Accelerate Development</h3>
-                    <p class="text-gray-400">Reduce late-stage rework and eliminate entire categories of vulnerabilities.</p>
-                </div>
-                 <div class="bg-gray-800 p-6 rounded-lg">
-                    <h3 class="font-bold text-white mb-2">✓ Educate and Empower</h3>
-                    <p class="text-gray-400">Provide developers with immediate, context-aware feedback to build their security skills.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Slide 22: Conclusion -->
-    <div id="slide-22" class="slide">
-        <div class="slide-content text-center">
-            <h1 class="text-5xl md:text-6xl font-black text-white">Thank You & Discussion</h1>
-            <div class="mt-10 max-w-3xl mx-auto text-lg space-y-4 text-gray-300">
-                <p>By moving beyond the chatbot, we can use GenAI as an integrated <span class="text-cyan-400 font-bold">reasoning engine</span>.</p>
-                <p>We can apply this engine to solve the expensive problem of <span class="text-cyan-400 font-bold">insecure design</span>.</p>
-                <p>The result is a system that <span class="text-cyan-400 font-bold">proactively guides and secures</span> our development lifecycle from the very beginning.</p>
-            </div>
-            <div class="mt-12 p-6 bg-gray-800/50 rounded-lg max-w-4xl mx-auto">
-                <h3 class="font-bold text-white text-xl">The Splunk Connection</h3>
-                <p class="mt-2 text-gray-400">"A system like this is fundamentally a data problem. It relies on ingesting diverse, unstructured telemetry, correlating it, and running advanced analytics to surface actionable insights. This aligns perfectly with Splunk's core mission of turning data into doing."</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 23: Sources -->
-    <div id="slide-23" class="slide">
-        <div class="slide-content">
-            <h1 class="text-4xl font-bold text-white mb-10 text-center">Sources & Further Reading</h1>
-            <ul class="space-y-4 text-lg text-gray-300">
-                <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://www.nist.gov/system/files/documents/director/planning/report02-3.pdf" target="_blank" class="text-white font-bold block hover:text-cyan-300">NIST: Cost of Defect Correction</a>
-                </li>
-                 <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" class="text-white font-bold block hover:text-cyan-300">Anthropic: Model Context Protocol (MCP)</a>
-                </li>
-                 <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://docs.stripe.com/building-with-llms" target="_blank" class="text-white font-bold block hover:text-cyan-300">Stripe: Building with LLMs</a>
-                </li>
-                 <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/" target="_blank" class="text-white font-bold block hover:text-cyan-300">OWASP Top 10: Security Misconfiguration</a>
-                </li>
-                 <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://www.ibm.com/reports/data-breach" target="_blank" class="text-white font-bold block hover:text-cyan-300">IBM: Cost of a Data Breach Report</a>
-                </li>
-                 <li class="p-3 bg-gray-800/50 rounded-lg">
-                    <a href="https://www.youtube.com/watch?v=LCEmiRjPEtQ" target="_blank" class="text-white font-bold block hover:text-cyan-300">Andrej Karpathy: Software Is Changing (Again)</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+    </div> <!-- End of #slide-container -->
 
     <!-- Navigation -->
-    <div class="fixed bottom-4 right-4 flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg">
+    <div class="fixed bottom-4 right-4 flex items-center space-x-2 bg-gray-800/50 p-2 rounded-lg z-20">
         <button id="prevBtn" class="p-2 rounded-md hover:bg-cyan-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
         </button>
@@ -613,6 +516,7 @@ GROUP BY region;</code></pre>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const slideContainer = document.getElementById('slide-container');
             const slides = document.querySelectorAll('.slide');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
@@ -633,23 +537,17 @@ GROUP BY region;</code></pre>
             function goToSlide(slideIndex) {
                 if (slideIndex < 0 || slideIndex >= totalSlides) return;
                 
-                if (currentSlide === 3 && chatInterval) {
+                if (chatInterval) {
                     clearTimeout(chatInterval);
                     chatInterval = null;
                 }
 
                 currentSlide = slideIndex;
                 
-                slides.forEach((slide, index) => {
-                    slide.classList.remove('active', 'previous');
-                    if (index === currentSlide) {
-                        slide.classList.add('active');
-                    } else if (index < currentSlide) {
-                        slide.classList.add('previous');
-                    }
-                });
+                // The new, simpler transform logic for the container
+                slideContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-                if (currentSlide === 3) {
+                if (currentSlide === 3) { // Note: Slide index is 0-based
                     startChatAnimation();
                 }
 
